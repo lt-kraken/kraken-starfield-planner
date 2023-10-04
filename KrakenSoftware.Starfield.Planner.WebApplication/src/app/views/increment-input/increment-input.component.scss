@@ -1,0 +1,56 @@
+@import "../../../assets/scss/colors";
+
+
+mat-form-field.increment-input {
+  width: 100px;
+  text-align: center;
+  -moz-appearance: textfield;
+
+  ::ng-deep .mat-form-field-flex {
+    padding: 0;
+  }
+
+  button {
+    font-size: 12px;
+    background: $yellow;
+    height: 41px;
+    text-align: center;
+    min-width: 26px;
+    padding: 0;
+
+    .mat-button-wrapper {
+      width: 10px;
+    }
+
+    &.mat-stroked-button.mat-primary {
+      color: white;
+      width: 20px;
+    }
+
+    &.mat-button-disabled {
+      background: $yellow_dark;
+    }
+  }
+
+  ::ng-deep .mat-form-field-prefix {
+    button {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+  }
+
+  ::ng-deep .mat-form-field-suffix {
+    button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+  }
+
+}
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}

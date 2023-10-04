@@ -1,0 +1,45 @@
+@import "../../../assets/scss/colors";
+
+
+ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+mat-hint {
+    color: $yellow_dark;
+}
+
+mat-form-field {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.mat-button.mat-primary.mat-button-disabled, .mat-button.mat-accent.mat-button-disabled, .mat-button.mat-warn.mat-button-disabled, .mat-button.mat-button-disabled.mat-button-disabled, .mat-icon-button.mat-primary.mat-button-disabled, .mat-icon-button.mat-accent.mat-button-disabled, .mat-icon-button.mat-warn.mat-button-disabled, .mat-icon-button.mat-button-disabled.mat-button-disabled, .mat-stroked-button.mat-primary.mat-button-disabled, .mat-stroked-button.mat-accent.mat-button-disabled, .mat-stroked-button.mat-warn.mat-button-disabled, .mat-stroked-button.mat-button-disabled.mat-button-disabled {
+    color: grey !important;
+}
+
+::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: white !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: $yellow !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: transparent !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: $yellow_dark !important;
+}
+
+::ng-deep.mat-form-field-flex {
+    background-color: rgba(0,0,0,.1) !important;
+}
