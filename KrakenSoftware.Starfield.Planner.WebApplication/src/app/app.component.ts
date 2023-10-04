@@ -10,7 +10,8 @@ export class AppComponent {
   public forecasts?: WeatherForecast[];
 
   constructor(http: HttpClient) {
-    http.get<WeatherForecast[]>('/weatherforecast').subscribe(result => {
+    const url = 'https://starfield-planner-api.krakensoftware.eu/weatherforecast';
+    http.get<WeatherForecast[]>(url).subscribe(result => {
       this.forecasts = result;
     }, error => console.error(error));
   }

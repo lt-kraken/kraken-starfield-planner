@@ -1,4 +1,4 @@
-namespace KrakenSoftware.Starfield.Planner
+namespace KrakenSoftware.Starfield.Planner.WebApi
 {
     public class WeatherForecast
     {

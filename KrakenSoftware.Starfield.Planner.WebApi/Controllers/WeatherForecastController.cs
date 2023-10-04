@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace KrakenSoftware.Starfield.Planner.Controllers
+namespace KrakenSoftware.Starfield.Planner.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
