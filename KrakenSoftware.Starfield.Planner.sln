@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrakenSoftware.Starfield.Planner.WebApi", "KrakenSoftware.Starfield.Planner.WebApi\KrakenSoftware.Starfield.Planner.WebApi.csproj", "{7AF9F9B6-399C-48BE-BA19-6245B708A097}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrakenSoftware.Starfield.Planner.WebApi", "KrakenSoftware.Starfield.Planner.WebApi\KrakenSoftware.Starfield.Planner.WebApi.csproj", "{7AF9F9B6-399C-48BE-BA19-6245B708A097}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "KrakenSoftware.Starfield.Planner.WebApplication", "KrakenSoftware.Starfield.Planner.WebApplication\KrakenSoftware.Starfield.Planner.WebApplication.esproj", "{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{7AF9F9B6-399C-48BE-BA19-6245B708A097}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AF9F9B6-399C-48BE-BA19-6245B708A097}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AF9F9B6-399C-48BE-BA19-6245B708A097}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
