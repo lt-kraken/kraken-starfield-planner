@@ -7,15 +7,17 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item active-link"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Planner</a>
+          <li class="nav-item"
+              [routerLinkActive]="['active-link']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="['/']">
+            <a class="nav-link text-dark" >Planner</a>
           </li>
           <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">FAQ</a>
+              [routerLinkActive]="['active-link']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="['/faq']">
+            <a class="nav-link text-dark">FAQ</a>
           </li>
         </ul>
       </div>

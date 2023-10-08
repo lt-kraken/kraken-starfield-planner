@@ -1,0 +1,58 @@
+<div id="faq-container">
+  <mat-card class="light">
+    <mat-card-header>
+      <mat-card-title>Can I share my data between devices?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      No, we do not (yet?) provide a mechanism to persist your data and/or transfer them to another device.
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="light">
+    <mat-card-header>
+      <mat-card-title>I have found an item that is not listed, what can I do?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      For simplicities sake, we have not added furniture to our planner, but remained focussed on production buildings.
+      Are you missing a production building? We're sorry! Please join our Discord to notify us of our mistake and we'll make sure it gets added as soon as possible!
+      <ul>
+        <li class="link" (click)="joinCommunity()">Join Discord</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="light">
+    <mat-card-header>
+      <mat-card-title>Are you hiring?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      No, I'm just a simple hobbyist trying to enjoy himself and learning new things. While KrakenSoftware might seem to indicate as such, it's just a personal brand.
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="light">
+    <mat-card-header>
+      <mat-card-title>Is this tool free?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Certainly! And it will remain to be as such. I'm simply coding for my hobby and love to share my work. If you're willing to sponsor for my efforts, feel free to donate using:
+      <ul>
+        <li class="link" (click)="openPatreon()">Patreon</li>
+        <li class="link" (click)="openPaypal()">PayPal</li>
+        <li class="link" (click)="openBuyMeACoffee()">Buy Me A Coffee</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="light">
+    <mat-card-header>
+      <mat-card-title>I have a complaint/idea/suggestion!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Great! Please come find me in Discord and we can discuss.
+      <ul>
+        <li class="link" (click)="joinCommunity()">Join Discord</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,22 @@
+@import '../../../assets/scss/colors';
+
+#faq-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 20px;
+  gap: 10px;
+
+  mat-card {
+    flex: 0 0 30%;
+
+    .link {
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: $red_dark;
+      }
+    }
+  }
+}

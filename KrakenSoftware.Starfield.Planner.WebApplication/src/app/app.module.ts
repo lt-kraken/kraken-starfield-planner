@@ -28,6 +28,7 @@ import {MatRippleModule} from "@angular/material/core";
 import { OutpostCardComponent } from './views/planner/outpost-card/outpost-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StructureCardComponent } from './views/planner/structure-card/structure-card.component';
+import { FaqComponent } from './views/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { StructureCardComponent } from './views/planner/structure-card/structure
     GroupByPipe,
     OutpostCardComponent,
     StructureCardComponent,
+    FaqComponent,
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -55,7 +57,8 @@ import { StructureCardComponent } from './views/planner/structure-card/structure
         MatCheckboxModule,
         FontAwesomeModule,
         RouterModule.forRoot([
-            {path: '', component: PlannerComponent, pathMatch: 'full'},
+          {path: '', component: PlannerComponent, pathMatch: 'full'},
+          {path: 'faq', component: FaqComponent, pathMatch: 'full'},
         ]),
         BrowserAnimationsModule,
         MatListModule,
