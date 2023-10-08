@@ -1,0 +1,43 @@
+@import "../assets/scss/colors";
+
+footer {
+  bottom: 0;
+  width: 100%;
+  color: $dark_text;
+
+  div#powered-by {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 12px;
+
+    span:first-child {
+      font-size: 14px;
+    }
+
+    img {
+      width: 60px;
+      height: 45px;
+      margin: 0 auto 20px auto;
+    }
+
+    button {
+      background: $panel_light_background;
+      margin: 4px 10px;
+
+      fa-icon  {
+        height: 20px;
+        width: 17px;
+      }
+    }
+  }
+
+  #copyright {
+    padding: 14px 0 25px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+
+

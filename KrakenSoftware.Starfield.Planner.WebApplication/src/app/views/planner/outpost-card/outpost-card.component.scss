@@ -1,0 +1,52 @@
+@import '../../../../assets/scss/colors';
+
+.outpost-card {
+  cursor: pointer;
+
+  &:not(.light) {
+    .location {
+      color: white;
+    }
+  }
+
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    > mat-icon {
+      font-size: 32px;
+      height: 35px;
+      width: 35px;
+    }
+
+    .outpost-name {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin: 0 15px;
+
+      .title, .location {
+        display: block;
+      }
+
+      .title {
+        font-size: 16px;
+      }
+
+      .location {
+        font-size: 12px;
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: row;
+
+      button {
+        margin: 3px;
+      }
+    }
+  }
+}

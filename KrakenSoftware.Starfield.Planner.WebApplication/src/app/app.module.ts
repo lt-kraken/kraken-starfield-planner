@@ -21,6 +21,13 @@ import { GroupByPipe } from './pipes/group-by.pipe';
 import { IncrementInputComponent } from './views/increment-input/increment-input.component';
 import { NavMenuComponent } from './views/nav-menu/nav-menu.component';
 import { PlannerComponent } from './views/planner/planner.component';
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatRippleModule} from "@angular/material/core";
+import { OutpostCardComponent } from './views/planner/outpost-card/outpost-card.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StructureCardComponent } from './views/planner/structure-card/structure-card.component';
 
 @NgModule({
   declarations: [
@@ -29,26 +36,34 @@ import { PlannerComponent } from './views/planner/planner.component';
     PlannerComponent,
     IncrementInputComponent,
     GroupByPipe,
+    OutpostCardComponent,
+    StructureCardComponent,
   ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTableModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatCheckboxModule,
-    RouterModule.forRoot([
-      { path: '', component: PlannerComponent, pathMatch: 'full' },
-    ]),
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatIconModule,
+        MatTableModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        FontAwesomeModule,
+        RouterModule.forRoot([
+            {path: '', component: PlannerComponent, pathMatch: 'full'},
+        ]),
+        BrowserAnimationsModule,
+        MatListModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatRippleModule,
+        FontAwesomeModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

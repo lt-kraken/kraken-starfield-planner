@@ -8,6 +8,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class IncrementInputComponent implements OnInit {
 
+  @Input({required: false}) class!: string;
+
   constructor() { }
 
   ngOnInit(): void {

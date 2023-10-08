@@ -3,5 +3,20 @@
     <div class="container">
       <router-outlet></router-outlet>
     </div>
+    <footer>
+      <div id="powered-by">
+        <span>Powered By</span>
+        <img src="assets/images/logo/krakensoftware.png" />
+        <span><a href="https://krakensoftware.eu" target="_blank" matTooltip="Opens in new tab">KrakenSoftware.eu</a> provides free-to-use, ad-free software made with love. However, it does cost money and time.</span>
+        <span>Please consider donating if you want to send love back.</span>
+        <div id="footer-actions">
+          <button mat-icon-button matTooltip="Patreon" (click)="openPatreon()"><fa-icon [icon]="faPatreon"></fa-icon></button>
+          <button mat-icon-button matTooltip="PayPal" (click)="openPaypal()"><fa-icon [icon]="faPayPal"></fa-icon></button>
+          <button mat-icon-button matTooltip="Buy Me A Coffee" (click)="openBuyMeACoffee()"><i class="fa fa-buymeacoffee" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div id="copyright">
+        © KrakenSoftware {{ getYear() }}. All Rights Reserved.
+      </div>
+    </footer>
   </body>
-  

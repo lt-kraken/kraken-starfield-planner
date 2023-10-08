@@ -7,6 +7,7 @@ import { BuildQueueItem } from 'src/app/models/BuildQueueItem';
 import { Outpost } from 'src/app/models/Outpost';
 import { OutpostStructure } from 'src/app/models/OutpostStructure';
 import { PersistenceService } from 'src/app/services/persistence.service';
+import { faAtom, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 
 interface Food {
   value: string;
@@ -17,7 +18,7 @@ interface Food {
   selector: 'app-planner',
   templateUrl: './planner.component.html',
   styleUrls: ['./planner.component.scss'],
-  
+
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -28,6 +29,8 @@ interface Food {
 })
 export class PlannerComponent implements OnInit {
 
+  faAtom = faAtom;
+  faMicrochip = faMicrochip;
 
   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},
@@ -56,12 +59,30 @@ export class PlannerComponent implements OnInit {
     }
 
     let self = this;
-    setInterval(function() { 
+    setInterval(function() {
         self.saveIndicatorSecondsLeft = --self.saveIndicatorSecondsLeft;
     }, 1000);
 
-    this.initiateAutoSave();  
+    this.initiateAutoSave();
   }
+
+  deleteQueuedOutpost(event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    console.log("clicked");
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   initiateAutoSave(): void {
     let self = this;
@@ -133,8 +154,10 @@ export class PlannerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Outpost) => {
       if (!result) return;
-      this.outposts[index] = result;
-      this.setActiveOutpost(this.outposts[index]);
+      this.outposts[index].Name = result.Name;
+      this.outposts[index].System = result.System;
+      this.outposts[index].Planet = result.Planet;
+      this.outposts[index].Moon = result.Moon;
     });
   }
 
@@ -155,6 +178,7 @@ export class PlannerComponent implements OnInit {
       if (result) {
         if (index > -1) this.outposts.splice(index, 1);
         this.setActiveOutpost(this.outposts[0]);
+        this.updateBuildQueue();
       }
     });
   }
@@ -171,7 +195,7 @@ export class PlannerComponent implements OnInit {
   addBlueprintStructure(): void {
     if (!this.activeOutpost) return;
     if (!this.activeOutpost.OutpostStructures) this.activeOutpost.OutpostStructures = [];
-    
+
     let item = {
       Structure: {
         Id: -1,
@@ -180,7 +204,7 @@ export class PlannerComponent implements OnInit {
       CurrentlyBuild: 0,
       DesiredBuild: 1,
     };
-    
+
     this.activeOutpost?.OutpostStructures?.push(item);
     this.updateBuildQueue();
   }

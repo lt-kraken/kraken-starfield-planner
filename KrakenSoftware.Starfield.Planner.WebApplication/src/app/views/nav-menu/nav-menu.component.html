@@ -1,46 +1,26 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Starfield Outpost Planner</a>
-      <!-- <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
+    <div class="header-container">
+      <span class="navbar-brand">Starfield Outpost Planner</span>
       <div
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <!-- <li class="nav-item"
+          <li class="nav-item active-link"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Outposts</a>
+            <a class="nav-link text-dark" [routerLink]="['/']">Planner</a>
           </li>
           <li class="nav-item"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Blueprints</a>
+            <a class="nav-link text-dark" [routerLink]="['/']">FAQ</a>
           </li>
-          <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Research Laboratory</a>
-          </li>
-          <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch Data</a>
-          </li> -->
         </ul>
+      </div>
+      <div class="custom-buttons">
+        <button mat-button class="red" (click)="joinCommunity()"><fa-icon [icon]="faDiscord"></fa-icon> Get Support!</button>
       </div>
     </div>
   </nav>

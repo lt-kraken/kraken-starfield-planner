@@ -1,45 +1,21 @@
-<mat-form-field appearance="fill" class="increment-input">
-    <button 
-      mat-stroked-button 
-      matPrefix 
-      [color]="getColor()" 
-      (click)="incrementValue(-_step)" 
+<mat-form-field appearance="fill" class="increment-input" [class]="class">
+  <input matInput type="number" [(ngModel)]="_value" (change)="onChange()" (focus)="setColor('primary')" (blur)="setColor('default')" />
+  <div class="increment-input-buttons">
+    <button
+      mat-stroked-button
+      matPrefix
+      [color]="getColor()"
+      (click)="incrementValue(-_step)"
       [disabled]="shouldDisableDecrement(_value)">
       <mat-icon>remove</mat-icon>
     </button>
-    <input matInput type="number" [(ngModel)]="_value" (change)="onChange()" (focus)="setColor('primary')" (blur)="setColor('default')" />
-    <button 
-      mat-stroked-button 
+    <button
+      mat-stroked-button
       matSuffix
-      [color]="getColor()" 
-      (click)="incrementValue(_step)" 
+      [color]="getColor()"
+      (click)="incrementValue(_step)"
       [disabled]="shouldDisableIncrement(_value)">
       <mat-icon>add</mat-icon>
     </button>
+  </div>
   </mat-form-field>
-
-
-
-
-
-  <!-- <mat-form-field appearance="outline">
-    <button 
-      mat-button 
-      mat-icon-button 
-      matPrefix 
-      [color]="getColor()" 
-      (click)="incrementValue(-_step)" 
-      [disabled]="shouldDisableDecrement(_value)">
-      <mat-icon>remove</mat-icon>
-    </button>
-    <input matInput type="number" [(ngModel)]="_value" (focus)="setColor('primary')" (blur)="setColor('default')" />
-    <button 
-      mat-button 
-      mat-icon-button 
-      matSuffix
-      [color]="getColor()" 
-      (click)="incrementValue(_step)" 
-      [disabled]="shouldDisableIncrement(_value)">
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-form-field> -->

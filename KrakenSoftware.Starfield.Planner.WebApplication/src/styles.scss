@@ -1,67 +1,160 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./assets/scss/colors";
 
-@import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&display=swap');
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-/* Provide sufficient contrast against white background */
-* {
-  z-index: 1;
-}
 
 html, body {
   height: 100%;
-  color: white;
-  background: #0b192b;
   margin: 0;
   padding: 0;
-}
-
-body { 
-  margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  padding: 20px; 
-}
-
-// body::before {
-//   content: "";
-//   background-image: url('./assets/images/bg.png');
-//   background-size: 30px;
-//   opacity: 0.1; /* Adjust the opacity value as needed (0.0 to 1.0) */
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   position: absolute;
-//   pointer-events: none; /* Allow interactions with the content beneath */
-// }
-
-html, body, span, p, button, div {
-  font-family: 'Glegoo', serif !important;
-}
-
-h1,h2,h3 {
-  color: $yellow;
-  font-family: 'Glegoo', serif !important;
-  font-weight: 700 !important;
-}
-
-h1 {
-  font-size: 36px !important;
-}
-
-h2 {
-  font-size: 28px !important;
-}
-
-h3 {
-  font-size: 20px !important;
+  background: $background;
 }
 
 a {
-  color: white;
+  color: $dark_input_shadow;
+
+  &:hover {
+    color: $orange_dark;
+  }
 }
 
-.mat-dialog-container {
-  background: $background;
-  color: white;
+h1, h2, h3 {
+  color: $dark_text;
+}
+
+#planner-container,
+.custom-buttons {
+
+  button.mat-mdc-button.green,
+  button.mat-mdc-icon-button.green {
+    box-shadow: inset 0 -4px $green_dark;
+    background: $green;
+    color: $dark_input_shadow;
+
+    &:active {
+      box-shadow: inset 0 -2px $green_dark;
+    }
+  }
+
+  button.mat-mdc-button.red,
+  button.mat-mdc-icon-button.red {
+    box-shadow: inset 0 -4px $red_dark;
+    background: $red;
+    color: white;
+
+    &:active {
+      box-shadow: inset 0 -2px $red_dark;
+    }
+  }
+
+  button.mat-mdc-button.orange,
+  button.mat-mdc-icon-button.orange {
+    box-shadow: inset 0 -4px $orange_dark;
+    background: $undetermined_008;
+    color: white;
+
+    &:active {
+      box-shadow: inset 0 -2px $orange_dark;
+    }
+  }
+
+  button.mat-mdc-button.orange:active,
+  button.mat-mdc-button.red:active,
+  button.mat-mdc-button.green:active {
+    margin-top: 2px;
+    padding: 13px 18px 11px 18px;
+  }
+
+  button.mat-mdc-button,
+  button.mat-mdc-icon-button {
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: $custom-font-family;
+    padding: 12px 18px 14px 18px;
+    height: auto !important;
+    transition: box-shadow ease-in-out 100ms,
+                padding ease-in-out 100ms,
+                margin ease-in-out 100ms;
+
+    .mat-mdc-button-persistent-ripple {
+      border-radius: 10px;
+    }
+  }
+
+  button.mat-mdc-icon-button {
+    padding: 12px 0px 14px 0px;
+
+    &:active {
+      box-shadow: none;
+      padding: 13px 0px 11px 0px;
+    }
+  }
+
+  button.red.panel-title-button {
+    padding: 3px !important;
+    width: 36px !important;
+    box-shadow: inset 0 -3px $red_dark;
+
+    mat-icon {
+      margin: 2px auto 0 auto !important;
+      padding: 0 !important;
+      color: white !important;
+    }
+  }
+
+  .mat-expansion-panel, mat-card {
+    background: $panel_dark_background !important;
+    box-shadow: inset 0 -4px $dark_input_shadow !important;
+    border-radius: 10px !important;
+
+    mat-panel-title,
+    .mat-expansion-indicator::after {
+      color: white;
+    }
+
+    mat-panel-description {
+      color: $panel-content-text;
+      font-size: 12px;
+    }
+
+    .mat-expansion-panel-content,
+    mat-card-content {
+      color: $panel-content-text;
+    }
+  }
+
+  .mat-expansion-panel.light, mat-card.light {
+    background: $panel_light_background !important;
+    box-shadow: inset 0 -4px $light_input_shadow !important;
+
+    mat-panel-title,
+    mat-panel-description,
+    .mat-expansion-indicator::after {
+      color: $dark_input_shadow;
+    }
+
+    .mat-expansion-panel-content,
+    mat-card-content {
+      color: $dark_input_shadow;
+    }
+  }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: $light_input_shadow;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $panel_light_background;
+
+  &:hover {
+    background: $dark_text;
+  }
 }

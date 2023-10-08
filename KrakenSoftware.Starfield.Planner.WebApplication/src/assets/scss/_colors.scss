@@ -1,8 +1,34 @@
-$background: #0b192b;
-$lighter_blue: #2f4c79;
-$lightest_blue: #365583;
-$yellow: #d7ab61;
-$yellow_dark: #aa833f;
-$orange: #e06236;
-$red: #c82337;
-$red_dark: #801724;
+// Brown-ish tints
+$panel_light_background: #F0E8DB;
+$panel-content-text: #E3CCAA; // Uncategorized ?
+$light_input_shadow: #B2A185; // Input & Shadow
+$background: #CFC8BD;
+
+// Dark Tints
+$dark_text: #3F4145; // text
+$panel_dark_background: #313139; //#24242E; // Panel background
+$dark_input_shadow: #141419; // Input & Shadow
+
+// Orange Tints
+$undetermined_008: #DB9F5C;
+$orange: #DF9148; // Button Front
+$orange_dark: #B0631A; // Shadow
+
+// Red Tints
+$red: #F76060; // Button Front
+$red_dark: #993131; // shadow
+
+// Green titns
+$green: #E3FF91;
+$green_dark: #6F8236;
+
+// Unused
+$undetermined_013: rgba(0,0,0,0);
+$undetermined_014: rgba(0,0,0,0);
+$undetermined_015: rgba(0,0,0,0);
+$undetermined_016: rgba(0,0,0,0);
+$undetermined_017: rgba(0,0,0,0);
+$undetermined_018: rgba(0,0,0,0);
+$undetermined_019: rgba(0,0,0,0);
+
+$custom-font-family: 'Quicksand', sans-serif;

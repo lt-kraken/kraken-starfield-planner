@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,11 +9,18 @@ import { Component } from '@angular/core';
 export class NavMenuComponent {
   isExpanded = false;
 
+  faDiscord = faDiscord;
+
   collapse() {
     this.isExpanded = false;
   }
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  joinCommunity() {
+    const url = 'https://discord.gg/YD5buJcUmZ';
+    window.open(url, '_blank');
   }
 }
