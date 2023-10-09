@@ -1,0 +1,71 @@
+<h3 mat-dialog-title>Create Outpost</h3>
+<div mat-dialog-content class="light">
+  <div class="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Outpost Name</mat-label>
+      <input matInput type="text" [formControl]="outpostFormControl" [(ngModel)]="data.name">
+      <button *ngIf="data.name" matSuffix mat-icon-button aria-label="Clear" (click)="data.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint align="end">{{data.name.length}} / 25</mat-hint>
+      <mat-error *ngIf="outpostFormControl.hasError('required')">
+        Outpost name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="outpostFormControl.hasError('minlength')">
+        Outpost name needs to be at least <strong>3 characters</strong> long
+      </mat-error>
+      <mat-error *ngIf="outpostFormControl.hasError('maxlength')">
+        Outpost name can only be <strong>25 characters</strong> long
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>System</mat-label>
+      <input matInput type="text" [formControl]="systemFormControl" [(ngModel)]="data.system">
+      <button *ngIf="data.system" matSuffix mat-icon-button aria-label="Clear" (click)="data.system=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint align="end">{{data.system.length}} / 25</mat-hint>
+      <mat-error *ngIf="systemFormControl.hasError('required')">
+        System name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="systemFormControl.hasError('minlength')">
+        System name needs to be at least <strong>3 characters</strong> long
+      </mat-error>
+      <mat-error *ngIf="systemFormControl.hasError('maxlength')">
+        System name can only be <strong>25 characters</strong> long
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Planet</mat-label>
+      <input matInput type="text" [formControl]="planetFormControl" [(ngModel)]="data.planet">
+      <button *ngIf="data.planet" matSuffix mat-icon-button aria-label="Clear" (click)="data.planet=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint align="end">{{data.planet.length}} / 25</mat-hint>
+      <mat-error *ngIf="planetFormControl.hasError('required')">
+        Planet name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="planetFormControl.hasError('minlength')">
+        Planet name needs to be at least <strong>3 characters</strong> long
+      </mat-error>
+      <mat-error *ngIf="planetFormControl.hasError('maxlength')">
+        Planet name can only be <strong>25 characters</strong> long
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Moon</mat-label>
+      <input matInput type="text" [formControl]="moonFormControl" [(ngModel)]="data.moon">
+      <button *ngIf="data.moon" matSuffix mat-icon-button aria-label="Clear" (click)="data.moon=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="moonFormControl.hasError('maxlength')">
+        Moon name is exceeding the <strong>max length</strong>
+      </mat-error>
+      <mat-hint align="end">{{data.moon.length}} / 25</mat-hint>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions class="custom-buttons" align="end">
+  <button mat-button class="orange" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="green" [mat-dialog-close]="data" [disabled]="!isFormValid()">Save Outpost</button>
+</div>

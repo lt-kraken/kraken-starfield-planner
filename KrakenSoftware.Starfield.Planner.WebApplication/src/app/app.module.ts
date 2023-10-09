@@ -29,6 +29,8 @@ import { OutpostCardComponent } from './views/planner/outpost-card/outpost-card.
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StructureCardComponent } from './views/planner/structure-card/structure-card.component';
 import { FaqComponent } from './views/faq/faq.component';
+import {CommonModule} from "@angular/common";
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { FaqComponent } from './views/faq/faq.component';
         MatCardModule,
         MatExpansionModule,
         MatRippleModule,
-        FontAwesomeModule
+        MatSnackBarModule,
+        FontAwesomeModule,
+        CommonModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,8 +15,8 @@
       <span>12 ~ 24</span>
     </div>
     <div class="card-actions">
-      <button mat-icon-button class="green"><mat-icon>check</mat-icon></button>
-      <button mat-icon-button class="red"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button class="green" *ngIf="includeConfirm" (click)="confirmStructure()"><mat-icon>check</mat-icon></button>
+      <button mat-icon-button class="red" (click)="deleteStructure()"><mat-icon>delete</mat-icon></button>
     </div>
   </mat-card-content>
 </mat-card>

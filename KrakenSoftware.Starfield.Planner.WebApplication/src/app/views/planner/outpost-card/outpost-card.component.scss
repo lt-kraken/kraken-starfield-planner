@@ -2,6 +2,7 @@
 
 .outpost-card {
   cursor: pointer;
+  transition: background ease-in-out 100ms;
 
   &:not(.light) {
     .location {

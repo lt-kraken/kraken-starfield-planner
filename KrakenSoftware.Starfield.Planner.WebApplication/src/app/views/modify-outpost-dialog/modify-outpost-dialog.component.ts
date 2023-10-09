@@ -7,16 +7,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormControl, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Outpost } from 'src/app/models/Outpost';
+import {Outpost} from "../../models/v1/outpost";
+// import { Outpost } from 'src/app/models/Outpost';
 
 @Component({
-  selector: 'app-create-outpost',
-  templateUrl: './create-outpost.component.html',
-  styleUrls: ['./create-outpost.component.scss'],
+  selector: 'app-modify-outpost-dialog',
+  templateUrl: './modify-outpost-dialog.component.html',
+  styleUrls: ['./modify-outpost-dialog.component.scss'],
   standalone: true,
   imports: [CommonModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule],
 })
-export class CreateOutpostComponent {
+export class ModifyOutpostDialogComponent {
 
   outpostFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
   systemFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
@@ -24,7 +25,7 @@ export class CreateOutpostComponent {
   moonFormControl = new FormControl('', [Validators.minLength(0), Validators.maxLength(25)]);
 
   constructor(
-    public dialogRef: MatDialogRef<CreateOutpostComponent>,
+    public dialogRef: MatDialogRef<ModifyOutpostDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Outpost,
   ) {
     dialogRef.disableClose = true;

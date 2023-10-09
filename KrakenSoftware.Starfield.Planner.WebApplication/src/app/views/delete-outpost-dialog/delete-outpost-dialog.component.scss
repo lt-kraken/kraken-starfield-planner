@@ -1,5 +1,6 @@
-//@import "../../../assets/scss/_colors.scss";
-//
-//span {
-//    color: $yellow_dark;
-//}
+@import "../../../assets/scss/_colors.scss";
+
+span {
+    text-decoration: underline;
+    color: $red_dark;
+}

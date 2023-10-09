@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateOutpostComponent } from './create-outpost.component';
+import { CreateOutpostComponent } from './modify-outpost-dialog.component';
 
 describe('CreateOutpostComponent', () => {
   let component: CreateOutpostComponent;

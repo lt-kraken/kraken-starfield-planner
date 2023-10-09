@@ -17,7 +17,7 @@
     margin-bottom: 10px;
   }
 
-  #outpost-list {
+  #outpost-list > div {
     display: flex;
     flex-direction: column;
     gap: 5px;

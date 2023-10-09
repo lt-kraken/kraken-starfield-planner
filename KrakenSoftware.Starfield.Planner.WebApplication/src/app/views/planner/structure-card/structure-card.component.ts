@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { OutpostStructure } from 'src/app/models/v1/outpost-structure';
 
 @Component({
   selector: 'app-structure-card',
@@ -7,5 +8,17 @@ import {Component, Input} from '@angular/core';
 })
 export class StructureCardComponent {
 
-  @Input({ required: false}) class!: string;
+  @Input() class?: any;
+  @Input() includeConfirm: boolean = false;
+  @Input() data!: OutpostStructure;
+  @Output() confirmed = new EventEmitter();
+  @Output() deleted = new EventEmitter();
+
+  deleteStructure(): void {
+    this.confirmed.emit(this.data);
+  }
+
+  confirmStructure(): void {
+    this.deleted.emit(this.data);
+  }
 }

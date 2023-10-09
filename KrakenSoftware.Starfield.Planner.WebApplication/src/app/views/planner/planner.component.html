@@ -1,49 +1,61 @@
 <div id="planner-container">
   <div id="planner-outposts">
     <div class="column-actions">
-      <button mat-button class="orange">
+      <button mat-button class="orange" (click)="createOutpost()">
         <mat-icon>add</mat-icon>
         Add Outpost
       </button>
     </div>
 
-    <div id="outpost-list" >
-      <app-outpost-card class="light" />
-      <app-outpost-card />
-      <app-outpost-card />
-      <app-outpost-card />
+    <div id="outpost-list">
+      <div *ngIf="data && data.outposts.length > 0; else no_outposts">
+        <app-outpost-card
+          *ngFor="let otp of data.outposts;"
+          [data]="otp"
+          [class]="{ 'light': isActiveOutpost(otp) }"
+          (click)="setActiveOutpost(otp)" 
+          (deleted)="deleteOutpost(otp)"
+          (modified)="modifyOutpost(otp, $event)"/>
+      </div>
+      <ng-template #no_outposts>
+        <div class="no_records_containers">
+          <p>No outposts have been configured yet. Would you like to get started by adding your first outpost?</p>
+          <div class="horizontal-alignment">
+            <button mat-button class="orange" (click)="createOutpost()">Yes</button>
+            <button mat-button class="red" (click)="createOutpost()">Yes, but in red</button>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
   <div id="planner-structures">
     <div class="column-actions">
-      <button mat-button class="orange">
+      <button mat-button class="orange" [disabled]="!activeOutpost">
         <mat-icon>add</mat-icon>
         Add Structure
       </button>
     </div>
 
     <div id="structure-list">
-      <div class="structure-group">
-        <h2>Unspecified</h2>
-        <app-structure-card class="light" />
-        <app-structure-card class="light" />
+      <div *ngIf="activeOutpost && activeOutpost.structures.length > 0; else no_unsaved_structures">
+        <div class="structure-group" *ngFor="let structure of activeOutpost.unsaved_structures">
+          <h2>Unsaved</h2>
+          <app-structure-card class="light" [includeConfirm]="true" [data]="structure" (confirmed)="addStructureToActiveOutpost(structure)" (deleted)="removeStructureFromActiveOutpost(structure)" />
+        </div>
       </div>
-
-      <div class="structure-group">
-        <h2>Power</h2>
-        <app-structure-card />
-        <app-structure-card />
-        <app-structure-card />
-        <app-structure-card />
+      <div *ngIf="activeOutpost && activeOutpost.structures.length > 0;">
+        <div class="structure-group" *ngFor="let group of activeOutpost.structures | groupBy: 'structure.category'">
+          <i>
+            {{group | json}}
+          </i>
+          <h2>{{ group.key }}</h2>
+          <app-structure-card *ngFor="let structure of group.value" [data]="structure" (deleted)="removeStructureFromActiveOutpost(structure)" />
+        </div>
       </div>
-
-      <div class="structure-group">
-        <h2>Builders</h2>
-        <app-structure-card />
-        <app-structure-card />
-        <app-structure-card />
-        <app-structure-card />
-      </div>
+      <ng-template #no_unsaved_structures>
+        <h2>Unsaved</h2>
+        <p>no unsaved structures</p>
+      </ng-template>
     </div>
   </div>
   <div id="planner-queue">
@@ -184,7 +196,7 @@
 <!--                    </div>-->
 <!--                </li>-->
 <!--            </ul>-->
-<!--            <button mat-raised-button (click)="createOutpost()" class="accented">Create New Outpost</button>-->
+<!--            <button mat-raised-button (click)="createOutpost()" class="accented">Create New outpost.ts</button>-->
 <!--        </div>-->
 <!--        <div class="outpost-structures">-->
 <!--            <h3>Structures</h3>-->
