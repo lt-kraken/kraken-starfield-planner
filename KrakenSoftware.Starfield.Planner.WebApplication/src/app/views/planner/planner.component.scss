@@ -24,8 +24,14 @@
   }
 
   #structure-list {
+
+    .structure-group h2 {
+      text-transform: capitalize;
+    }
+
     .structure-group:not(:first-child) {
       margin-top: 14px;
+      padding: 7px 0 0 0;
     }
 
     app-structure-card {

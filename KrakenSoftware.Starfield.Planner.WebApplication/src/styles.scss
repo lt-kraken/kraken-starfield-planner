@@ -209,7 +209,7 @@ mat-snack-bar-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    
+
     .mat-form-field-appearance-fill .mat-mdc-text-field-wrapper {
       background-color: $light_input_shadow !important;
     }
@@ -231,10 +231,11 @@ mat-snack-bar-container {
 }
 
 /* Containers */
-.no_records_containers {
+.no_records_containers,
+#no_active_outpost {
   text-align: center;
   padding: 40px 20px;
-  
+
   p {
     font-size: 20px;
     line-height: 28px;
@@ -245,5 +246,14 @@ mat-snack-bar-container {
     flex-direction: row;
     justify-content: center;
     gap: 10px;
+  }
+}
+
+
+#no_unsaved_structures {
+  p {
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
   }
 }

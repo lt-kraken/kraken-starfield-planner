@@ -16,11 +16,9 @@ export class OutpostCardComponent {
   @Output() deleted = new EventEmitter();
   @Output() modified = new EventEmitter();
 
-  constructor(public dialog: MatDialog) {
-    console.log(this);
-  }
+  constructor(public dialog: MatDialog) { }
 
-  editOutpost(outpost: Outpost, $event: Event) {    
+  editOutpost(outpost: Outpost, $event: Event) {
     $event.stopPropagation();
     $event.preventDefault();
 
@@ -34,7 +32,7 @@ export class OutpostCardComponent {
     });
   }
 
-  deleteOutpost(outpost: Outpost, $event: Event) {    
+  deleteOutpost(outpost: Outpost, $event: Event) {
     $event.stopPropagation();
     $event.preventDefault();
 

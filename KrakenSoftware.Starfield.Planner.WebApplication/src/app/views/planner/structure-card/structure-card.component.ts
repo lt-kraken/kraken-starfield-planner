@@ -15,10 +15,10 @@ export class StructureCardComponent {
   @Output() deleted = new EventEmitter();
 
   deleteStructure(): void {
-    this.confirmed.emit(this.data);
+    this.deleted.emit(this.data);
   }
 
   confirmStructure(): void {
-    this.deleted.emit(this.data);
+    this.confirmed.emit(this.data);
   }
 }

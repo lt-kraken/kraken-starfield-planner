@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { PersistenceService } from 'src/app/services/persistence.service';
-import { faAtom, faMicrochip } from '@fortawesome/free-solid-svg-icons';
+import {PersistenceService} from 'src/app/services/persistence.service';
+import {faAtom, faMicrochip} from '@fortawesome/free-solid-svg-icons';
 import {ApplicationData} from "../../models/v1/application-data";
 import {Outpost} from "../../models/v1/outpost";
-import { OutpostStructure } from 'src/app/models/v1/outpost-structure';
-import { SnackbarService } from 'src/app/services/snackbar.service';
-import { ModifyOutpostDialogComponent } from '../modify-outpost-dialog/modify-outpost-dialog.component';
+import {OutpostStructure} from 'src/app/models/v1/outpost-structure';
+import {SnackbarService} from 'src/app/services/snackbar.service';
+import {ModifyOutpostDialogComponent} from '../modify-outpost-dialog/modify-outpost-dialog.component';
+import * as _ from "lodash";
+import {GroupedResult} from "../../models/v1/grouped_result";
 
 interface Food {
   value: string;
@@ -40,17 +42,17 @@ export class PlannerComponent implements OnInit {
 
   data!: ApplicationData;
   activeOutpost?: Outpost = undefined;
+  groupedOutpostStructures: { [category: string]: OutpostStructure[] } = {};
 
   constructor(
-    public dialog: MatDialog, 
-    private persistenceService: PersistenceService, 
+    public dialog: MatDialog,
+    private persistenceService: PersistenceService,
     private _snackBar: SnackbarService) {}
 
   ngOnInit(): void {
     this.data = this.persistenceService.getApplicationData();
-    console.log(this.data);
-
     this.setInitialSelection();
+    this.updateOutpostStructureGroups();
   }
 
   setInitialSelection(): void {
@@ -62,13 +64,7 @@ export class PlannerComponent implements OnInit {
     }
   }
 
-  deleteQueuedOutpost(event: Event): void {
-    event.stopPropagation();
-    event.preventDefault();
-
-    console.log("clicked");
-  }
-
+  //#region OUTPOST OPERATIONS
   deleteOutpost(outpost: Outpost): void {
     let index = this.data.outposts.indexOf(outpost);
     if (index === -1) {
@@ -94,7 +90,7 @@ export class PlannerComponent implements OnInit {
   }
 
   createOutpost(): void {
-    let dialogData: Outpost = { 
+    let dialogData: Outpost = {
       name: '',
       system: '',
       planet: '',
@@ -120,20 +116,82 @@ export class PlannerComponent implements OnInit {
     let result = this.activeOutpost == outpost;
     return result;
   }
+  //#endregion
+
+  //#region STRUCTURE OPERATIONS
+  getStructureCategories(): string[] {
+    return Object.keys(this.groupedOutpostStructures);
+  }
+
+  updateOutpostStructureGroups(): void {
+    if (!this.activeOutpost) return;
+
+    this.groupedOutpostStructures = this.activeOutpost.structures.reduce((acc, curr) => {
+      const category = curr.structure?.category || 'Other';
+      acc[category] = [...(acc[category] || []), curr];
+      return acc;
+    }, {} as { [category: string]: OutpostStructure[] });
+  }
+
+  addUnsavedStructure(): void {
+    if (!this.activeOutpost) {
+      this._snackBar.showMessage('Unable to add structure because no outpost is selected', 'red');
+      return;
+    }
+
+    this.activeOutpost.unsaved_structures.push(new OutpostStructure());
+  }
 
   addStructureToActiveOutpost(structure: OutpostStructure): void {
-    console.log(structure);
+    if (!this.activeOutpost) {
+      this._snackBar.showMessage('Unable to add structure because no outpost is selected', 'red');
+      return;
+    }
+
+    let index = this.activeOutpost.unsaved_structures.indexOf(structure);
+    this.activeOutpost.unsaved_structures.splice(index, 1);
+    this.activeOutpost.structures.push(new OutpostStructure());
+
+    this.updateOutpostStructureGroups();
   }
 
   removeStructureFromActiveOutpost(structure: OutpostStructure): void {
-    console.log(structure);
+    if (!this.activeOutpost) {
+      this._snackBar.showMessage('Unable to delete structure because no outpost is selected', 'red');
+      return;
+    }
+
+    let unused_index = this.activeOutpost.unsaved_structures.indexOf(structure);
+    if (unused_index !== -1) {
+      this.activeOutpost.unsaved_structures.splice(unused_index, 1);
+      this.updateOutpostStructureGroups();
+      return;
+    }
+
+    let index = this.activeOutpost.structures.indexOf(structure);
+    if (index !== -1) {
+      this.activeOutpost.structures.splice(unused_index, 1);
+      this.updateOutpostStructureGroups();
+      return;
+    }
+
+    this._snackBar.showMessage(`Structure ${structure.structure?.name} could not be found for outpost ${this.activeOutpost.name}`, 'red')
   }
+  //#endregion
 
 
 
 
 
 
+
+
+  deleteQueuedOutpost(event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    console.log("clicked");
+  }
 
 
 

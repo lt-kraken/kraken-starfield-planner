@@ -13,7 +13,7 @@
           *ngFor="let otp of data.outposts;"
           [data]="otp"
           [class]="{ 'light': isActiveOutpost(otp) }"
-          (click)="setActiveOutpost(otp)" 
+          (click)="setActiveOutpost(otp)"
           (deleted)="deleteOutpost(otp)"
           (modified)="modifyOutpost(otp, $event)"/>
       </div>
@@ -30,31 +30,37 @@
   </div>
   <div id="planner-structures">
     <div class="column-actions">
-      <button mat-button class="orange" [disabled]="!activeOutpost">
+      <button mat-button class="orange" [disabled]="!activeOutpost" (click)="addUnsavedStructure()">
         <mat-icon>add</mat-icon>
         Add Structure
       </button>
     </div>
 
     <div id="structure-list">
-      <div *ngIf="activeOutpost && activeOutpost.structures.length > 0; else no_unsaved_structures">
-        <div class="structure-group" *ngFor="let structure of activeOutpost.unsaved_structures">
-          <h2>Unsaved</h2>
-          <app-structure-card class="light" [includeConfirm]="true" [data]="structure" (confirmed)="addStructureToActiveOutpost(structure)" (deleted)="removeStructureFromActiveOutpost(structure)" />
+      <div *ngIf="activeOutpost; else no_active_outpost">
+        <div *ngIf="activeOutpost.unsaved_structures.length > 0; else no_unsaved_structures">
+          <div class="structure-group">
+            <h2>Temporary (unsaved)</h2>
+            <app-structure-card class="light" *ngFor="let structure of activeOutpost.unsaved_structures" [includeConfirm]="true" [data]="structure" (confirmed)="addStructureToActiveOutpost(structure)" (deleted)="removeStructureFromActiveOutpost(structure)" />
+          </div>
         </div>
-      </div>
-      <div *ngIf="activeOutpost && activeOutpost.structures.length > 0;">
-        <div class="structure-group" *ngFor="let group of activeOutpost.structures | groupBy: 'structure.category'">
-          <i>
-            {{group | json}}
-          </i>
-          <h2>{{ group.key }}</h2>
-          <app-structure-card *ngFor="let structure of group.value" [data]="structure" (deleted)="removeStructureFromActiveOutpost(structure)" />
+        <div *ngIf="activeOutpost.structures.length > 0;">
+          <div class="structure-group" *ngFor="let category of getStructureCategories()">
+            <h2>{{ category }}</h2>
+            <app-structure-card *ngFor="let outpostStructure of groupedOutpostStructures[category]" [data]="outpostStructure" (deleted)="removeStructureFromActiveOutpost(outpostStructure)" />
+          </div>
         </div>
+        <ng-template #no_unsaved_structures>
+          <div id="no_unsaved_structures" class="structure-group">
+            <h2>Temporary (unsaved)</h2>
+            <p>No unsaved structures</p>
+          </div>
+        </ng-template>
       </div>
-      <ng-template #no_unsaved_structures>
-        <h2>Unsaved</h2>
-        <p>no unsaved structures</p>
+      <ng-template #no_active_outpost>
+        <div id="no_active_outpost">
+          <p>No outpost selected.</p>
+        </div>
       </ng-template>
     </div>
   </div>

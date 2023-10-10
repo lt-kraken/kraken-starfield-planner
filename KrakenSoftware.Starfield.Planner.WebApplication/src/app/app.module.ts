@@ -17,7 +17,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { GroupByPipe } from './pipes/group-by.pipe';
 import { IncrementInputComponent } from './views/increment-input/increment-input.component';
 import { NavMenuComponent } from './views/nav-menu/nav-menu.component';
 import { PlannerComponent } from './views/planner/planner.component';
@@ -38,7 +37,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     NavMenuComponent,
     PlannerComponent,
     IncrementInputComponent,
-    GroupByPipe,
     OutpostCardComponent,
     StructureCardComponent,
     FaqComponent,
