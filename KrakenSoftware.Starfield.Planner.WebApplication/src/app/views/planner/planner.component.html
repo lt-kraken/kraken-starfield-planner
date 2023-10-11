@@ -1,3 +1,11 @@
+<div>
+  <h2>DEVELOPMENT DEBUG OPTIONS</h2>
+  <button mat-button class="green" (click)="DELETE_ME_SAVE_CACHE()">Save to cache</button>
+  <button mat-button class="red" (click)="DELETE_ME_CLEAR_CACHE()">Clear cache</button>
+  <button mat-button class="orange" (click)="DELETE_ME_SHOW_CACHE()">Show cache (json)</button>
+  <span>{{ cachedValued | json }}</span>
+</div>
+
 <div id="planner-container">
   <div id="planner-outposts">
     <div class="column-actions">
@@ -41,13 +49,13 @@
         <div *ngIf="activeOutpost.unsaved_structures.length > 0; else no_unsaved_structures">
           <div class="structure-group">
             <h2>Temporary (unsaved)</h2>
-            <app-structure-card class="light" *ngFor="let structure of activeOutpost.unsaved_structures" [includeConfirm]="true" [data]="structure" (confirmed)="addStructureToActiveOutpost(structure)" (deleted)="removeStructureFromActiveOutpost(structure)" />
+            <app-structure-card class="light" *ngFor="let structure of activeOutpost.unsaved_structures" [includeConfirm]="true" [enableDropdown]="true" [data]="structure" [structureOptions$]="structures" (confirmed)="addStructureToActiveOutpost(structure)" (deleted)="removeStructureFromActiveOutpost(structure)" />
           </div>
         </div>
         <div *ngIf="activeOutpost.structures.length > 0;">
           <div class="structure-group" *ngFor="let category of getStructureCategories()">
             <h2>{{ category }}</h2>
-            <app-structure-card *ngFor="let outpostStructure of groupedOutpostStructures[category]" [data]="outpostStructure" (deleted)="removeStructureFromActiveOutpost(outpostStructure)" />
+            <app-structure-card *ngFor="let outpostStructure of groupedOutpostStructures[category]" [enableDropdown]="false" [data]="outpostStructure" [structureOptions$]="structures" (deleted)="removeStructureFromActiveOutpost(outpostStructure)" />
           </div>
         </div>
         <ng-template #no_unsaved_structures>
@@ -145,10 +153,10 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-list>
-          <mat-list-item><mat-checkbox>Solar Array (x10)</mat-checkbox></mat-list-item>
-          <mat-list-item><mat-checkbox>Ore Mine - Commercial (x10)</mat-checkbox></mat-list-item>
-          <mat-list-item><mat-checkbox>Fabricator (x10)</mat-checkbox></mat-list-item>
-          <mat-list-item><mat-checkbox>Something Else (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Build: Solar Array (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Build: Ore Mine - Commercial (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Build: Fabricator (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Demolish: Something Else (x10)</mat-checkbox></mat-list-item>
         </mat-list>
       </mat-expansion-panel>
       <mat-expansion-panel>
@@ -162,10 +170,10 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-list>
-          <mat-list-item><mat-checkbox>Solar Array (x10)</mat-checkbox></mat-list-item>
-          <mat-list-item><mat-checkbox>Ore Mine - Commercial (x10)</mat-checkbox></mat-list-item>
-          <mat-list-item><mat-checkbox>Fabricator (x10)</mat-checkbox></mat-list-item>
-          <mat-list-item><mat-checkbox>Something Else (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Build: Solar Array (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Build: Ore Mine - Commercial (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Build: Fabricator (x10)</mat-checkbox></mat-list-item>
+          <mat-list-item><mat-checkbox>Demolish: Something Else (x10)</mat-checkbox></mat-list-item>
         </mat-list>
       </mat-expansion-panel>
     </mat-accordion>

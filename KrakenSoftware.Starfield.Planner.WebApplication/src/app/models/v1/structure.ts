@@ -6,5 +6,6 @@ export class Structure {
   powerProductionMin?: number;
   powerProductionMax?: number;
   build_cost: Resource[] = [];
+  //operating_cost: Resource[] = [];
   category?: string;
 }

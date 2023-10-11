@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import {OutpostStructure} from "../../models/v1/outpost-structure";
 
 @Component({
   selector: 'app-increment-input',
@@ -9,6 +10,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class IncrementInputComponent implements OnInit {
 
   @Input({required: false}) class!: string;
+  @Input() data!: OutpostStructure;
 
   constructor() { }
 
@@ -19,7 +21,6 @@ export class IncrementInputComponent implements OnInit {
     formField: new FormControl()
   });
 
-  _value: number = 0;
   _step: number = 1;
   _min: number = 0;
   _max: number = Infinity;
@@ -28,7 +29,7 @@ export class IncrementInputComponent implements OnInit {
 
   @Input('value')
   set inputValue(_value: number) {
-    this._value = this.parseNumber(_value);
+    this.data.amount_queued = this.parseNumber(_value);
     this.onChange();
   }
 
@@ -64,14 +65,14 @@ export class IncrementInputComponent implements OnInit {
   }
 
   onChange(): void {
-    if (this._value > this._max) {
-      this._value = this._max;
+    if (this.data.amount_queued > this._max) {
+      this.data.amount_queued = this._max;
     }
-    else if(this._value < this._min) {
-      this._value = this._min;
+    else if(this.data.amount_queued < this._min) {
+      this.data.amount_queued = this._min;
     }
 
-    this.valueUpdated.emit({amount: this._value});
+    this.valueUpdated.emit({amount: this.data.amount_queued});
   }
 
   setColor(color: string): void {
@@ -84,14 +85,14 @@ export class IncrementInputComponent implements OnInit {
 
   incrementValue(step: number = 1): void {
 
-    let inputValue = this._value + step;
+    let inputValue = this.data.amount_queued + step;
 
     if (this._wrap) {
       inputValue = this.wrappedValue(inputValue);
     }
 
-    this._value = inputValue;
-    this.valueUpdated.emit({amount: this._value});
+    this.data.amount_queued = inputValue;
+    this.valueUpdated.emit({amount: this.data.amount_queued});
   }
 
   private wrappedValue(inputValue: any): number {

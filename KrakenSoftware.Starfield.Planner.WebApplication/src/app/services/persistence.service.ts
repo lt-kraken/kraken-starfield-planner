@@ -20,13 +20,12 @@ export class PersistenceService {
     localStorage.setItem(this.DATA_KEY, JSON.stringify(data));
   }
 
-  public getApplicationData(): ApplicationData {
-    return this.getMockData();
-
-
+  public getApplicationData(useMockIfEmpty: boolean = false): ApplicationData {
     let current = localStorage.getItem(this.DATA_KEY);
-    if (!current) return new ApplicationData();
-    return JSON.parse(current ?? '');
+    let result = JSON.parse(current ?? '');
+
+    if (result.outposts.length === 0 && useMockIfEmpty) return this.getMockData();
+    return result;
   }
 
   private getMockData(): ApplicationData {
@@ -50,27 +49,60 @@ export class PersistenceService {
           structures: [
             {
               structure: {
-                name: 'test',
-                build_cost: [{ name:'iron', amount: 2, weight: .1 }],
+                name: 'Solar Array',
                 category: 'power',
+                build_cost: [
+                  {
+                    name: 'Aluminum',
+                    amount: 4,
+                    weight: .1
+                  },
+                  {
+                    name: 'Beryllium',
+                    amount: 2,
+                    weight: .2
+                  },
+                  {
+                    name: 'Copper',
+                    amount: 3,
+                    weight: .1
+                  }
+                ],
                 powerDemand: undefined,
-                powerProductionMax: 4,
-                powerProductionMin: 8
+                powerProductionMin: 4,
+                powerProductionMax: 6
               },
-              amount_build: 0,
-              amount_queued: 0
+              amount_build: 4,
+              amount_queued: -2
             },
             {
               structure: {
-                name: 'test',
-                build_cost: [{ name:'iron', amount: 2, weight: .1 }],
-                category: 'power',
-                powerDemand: undefined,
-                powerProductionMax: 4,
-                powerProductionMin: 8
-              },
-              amount_build: 0,
-              amount_queued: 0
+                name: 'Simple Fabricator - Adaptive Frame',
+                category: 'builders',
+                build_cost: [
+                  {
+                    name: 'Aluminum',
+                    amount: 8,
+                    weight: .1
+                  },
+                  {
+                    name: 'Sealant',
+                    amount: 2,
+                    weight: .1
+                  },
+                  {
+                    name: 'Tungsten',
+                    amount: 4,
+                    weight: .1
+                  },
+                  {
+                    name: 'Zero Wire',
+                    amount: 3,
+                    weight: .1
+                  }
+              ]},
+              amount_build: 2,
+              amount_queued: 5
             },
           ]
         },

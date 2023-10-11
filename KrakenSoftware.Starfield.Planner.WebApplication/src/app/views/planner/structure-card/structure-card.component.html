@@ -1,18 +1,18 @@
 <mat-card class="structure-card" [class]="class">
   <mat-card-content>
     <div class="card-input-fields">
-      <mat-form-field appearance="fill">
+      <span *ngIf="!enableDropdown">{{ data.structure?.name ?? '' }}</span>
+      <mat-form-field appearance="fill" *ngIf="enableDropdown">
         <mat-label>Structure</mat-label>
-        <mat-select panelClass="{{class}}">
-          <mat-option value="one">First option</mat-option>
-          <mat-option value="two">Second option</mat-option>
+        <mat-select panelClass="{{class}}" [(ngModel)]="currentStructureName" (selectionChange)="updateStructure()">
+          <mat-option *ngFor="let structure of structureOptions$ | async" [value]="structure.name">{{ structure.name }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <app-increment-input [class]="class" />
+      <app-increment-input [class]="class" [data]="data" />
     </div>
     <div class="structure-power">
       <mat-icon>bolt</mat-icon>
-      <span>12 ~ 24</span>
+      <span>{{ formatPowerDemandOrProduction() }}</span>
     </div>
     <div class="card-actions">
       <button mat-icon-button class="green" *ngIf="includeConfirm" (click)="confirmStructure()"><mat-icon>check</mat-icon></button>

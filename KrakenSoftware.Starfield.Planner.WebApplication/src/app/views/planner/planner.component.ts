@@ -10,6 +10,9 @@ import {SnackbarService} from 'src/app/services/snackbar.service';
 import {ModifyOutpostDialogComponent} from '../modify-outpost-dialog/modify-outpost-dialog.component';
 import * as _ from "lodash";
 import {GroupedResult} from "../../models/v1/grouped_result";
+import {ApiClientService} from "../../services/api-client.service";
+import {Structure} from "../../models/v1/structure";
+import {Observable} from "rxjs";
 
 interface Food {
   value: string;
@@ -43,16 +46,20 @@ export class PlannerComponent implements OnInit {
   data!: ApplicationData;
   activeOutpost?: Outpost = undefined;
   groupedOutpostStructures: { [category: string]: OutpostStructure[] } = {};
+  structures!: Observable<Structure[]>;
 
   constructor(
     public dialog: MatDialog,
     private persistenceService: PersistenceService,
-    private _snackBar: SnackbarService) {}
+    private _snackBar: SnackbarService,
+    private apiClient: ApiClientService) {}
 
   ngOnInit(): void {
     this.data = this.persistenceService.getApplicationData();
     this.setInitialSelection();
     this.updateOutpostStructureGroups();
+
+    this.structures = this.apiClient.getStructures();
   }
 
   setInitialSelection(): void {
@@ -143,6 +150,8 @@ export class PlannerComponent implements OnInit {
   }
 
   addStructureToActiveOutpost(structure: OutpostStructure): void {
+    console.log(structure);
+
     if (!this.activeOutpost) {
       this._snackBar.showMessage('Unable to add structure because no outpost is selected', 'red');
       return;
@@ -150,7 +159,7 @@ export class PlannerComponent implements OnInit {
 
     let index = this.activeOutpost.unsaved_structures.indexOf(structure);
     this.activeOutpost.unsaved_structures.splice(index, 1);
-    this.activeOutpost.structures.push(new OutpostStructure());
+    this.activeOutpost.structures.push(structure);
 
     this.updateOutpostStructureGroups();
   }
@@ -182,7 +191,22 @@ export class PlannerComponent implements OnInit {
 
 
 
+  //#region DELETE ME METHODS
+  public DELETE_ME_SAVE_CACHE(): void {
+    this.persistenceService.persistApplicationData(this.data);
+    this._snackBar.showMessage(`DEBUG: PERSISTED TO CACHE`, 'red');
+  }
 
+  public DELETE_ME_CLEAR_CACHE(): void {
+    this.persistenceService.persistApplicationData(new ApplicationData());
+    this._snackBar.showMessage(`DEBUG: CLEARED CACHE`, 'red');
+  }
+
+  public cachedValued?: ApplicationData;
+  public DELETE_ME_SHOW_CACHE(): void {
+    this.cachedValued = this.persistenceService.getApplicationData();
+    this._snackBar.showMessage(`DEBUG: CACHE DISPLAY TOGGLED`, 'red');
+  }
 
 
 
