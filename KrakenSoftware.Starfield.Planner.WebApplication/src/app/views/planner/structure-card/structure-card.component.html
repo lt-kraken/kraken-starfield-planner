@@ -9,10 +9,13 @@
         </mat-select>
       </mat-form-field>
       <app-increment-input [class]="class" [data]="data" />
+      <span class="green-label" *ngIf="data.amount_desired > 0">+ {{ data.amount_desired }}</span>
+      <span class="red-label" *ngIf="data.amount_desired < 0">- {{ data.amount_desired }}</span>
     </div>
     <div class="structure-power">
       <mat-icon>bolt</mat-icon>
       <span>{{ formatPowerDemandOrProduction() }}</span>
+      <span *ngIf="data.amount_desired">{{ calculateChange() }}</span>
     </div>
     <div class="card-actions">
       <button mat-icon-button class="green" *ngIf="includeConfirm" (click)="confirmStructure()"><mat-icon>check</mat-icon></button>

@@ -7,6 +7,18 @@
     align-items: center;
     justify-content: space-between;
 
+    .green-label {
+      color: $green;
+      line-height: 56px;
+      font-size: 14px;
+    }
+
+    .red-label {
+      color: $red;
+      line-height: 56px;
+      font-size: 14px;
+    }
+
     .structure-power {
       span {
         line-height: 24px;

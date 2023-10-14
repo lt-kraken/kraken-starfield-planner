@@ -29,7 +29,7 @@ export class IncrementInputComponent implements OnInit {
 
   @Input('value')
   set inputValue(_value: number) {
-    this.data.amount_queued = this.parseNumber(_value);
+    this.data.amount_desired = this.parseNumber(_value);
     this.onChange();
   }
 
@@ -65,14 +65,14 @@ export class IncrementInputComponent implements OnInit {
   }
 
   onChange(): void {
-    if (this.data.amount_queued > this._max) {
-      this.data.amount_queued = this._max;
+    if (this.data.amount_desired > this._max) {
+      this.data.amount_desired = this._max;
     }
-    else if(this.data.amount_queued < this._min) {
-      this.data.amount_queued = this._min;
+    else if(this.data.amount_desired < this._min) {
+      this.data.amount_desired = this._min;
     }
 
-    this.valueUpdated.emit({amount: this.data.amount_queued});
+    this.valueUpdated.emit({amount: this.data.amount_desired});
   }
 
   setColor(color: string): void {
@@ -85,14 +85,14 @@ export class IncrementInputComponent implements OnInit {
 
   incrementValue(step: number = 1): void {
 
-    let inputValue = this.data.amount_queued + step;
+    let inputValue = this.data.amount_desired + step;
 
     if (this._wrap) {
       inputValue = this.wrappedValue(inputValue);
     }
 
-    this.data.amount_queued = inputValue;
-    this.valueUpdated.emit({amount: this.data.amount_queued});
+    this.data.amount_desired = inputValue;
+    this.valueUpdated.emit({amount: this.data.amount_desired});
   }
 
   private wrappedValue(inputValue: any): number {

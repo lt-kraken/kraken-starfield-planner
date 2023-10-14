@@ -58,14 +58,27 @@ export class StructureCardComponent implements OnInit {
     if (isPowerBuilding && this.data.structure.powerProductionMin && this.data.structure.powerProductionMax) {
       let minProductionBuild = this.data.structure.powerProductionMin * this.data.amount_build;
       let maxProductionBuild = this.data.structure.powerProductionMax * this.data.amount_build;
-      let minProductionQueued = this.data.structure.powerProductionMin * this.data.amount_queued;
-      let maxProductionQueued = this.data.structure.powerProductionMax * this.data.amount_queued;
-      return `${minProductionBuild + minProductionQueued}~${maxProductionBuild + maxProductionQueued}`;
+      return `${minProductionBuild}~${maxProductionBuild}`;
     }
 
     if (!this.data.structure.powerDemand) return '?';
     let demandBuild = this.data.structure.powerDemand * this.data.amount_build;
-    let demandQueued = this.data.structure.powerDemand * this.data.amount_queued;
+    let demandQueued = this.data.structure.powerDemand * this.data.amount_desired;
     return `${demandBuild + demandQueued}`;
+  }
+
+  public calculateChange(): string {
+    if (!this.data.structure || !this.data.amount_desired) return '';
+
+    let isPowerBuildng = !this.data.structure.powerDemand;
+    if (isPowerBuildng && this.data.structure.powerProductionMin && this.data.structure.powerProductionMax) {
+      let minProductionQueued = this.data.structure.powerProductionMin * this.data.amount_desired;
+      let maxProductionQueued = this.data.structure.powerProductionMax * this.data.amount_desired;
+      return `${minProductionQueued}~${maxProductionQueued}`;
+    }
+
+    if (!this.data.structure.powerDemand) return '';
+    let demandQueued = this.data.structure.powerDemand * this.data.amount_desired;
+    return `${demandQueued}`;
   }
 }
