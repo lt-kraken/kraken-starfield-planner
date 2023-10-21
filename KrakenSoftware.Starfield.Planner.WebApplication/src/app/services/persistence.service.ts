@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ApplicationData} from "../models/v1/application-data";
+import {PlannerComponent} from "../views/planner/planner.component";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class PersistenceService {
   constructor() {
   }
 
-  public persistableAction(data: ApplicationData, action: any): void {
-    action();
+  public persistableAction(self: any, data: ApplicationData, action: any): void {
+    action(self, data);
     this.persistApplicationData(data);
   }
 
@@ -20,7 +21,7 @@ export class PersistenceService {
     localStorage.setItem(this.DATA_KEY, JSON.stringify(data));
   }
 
-  public getApplicationData(useMockIfEmpty: boolean = false): ApplicationData {
+  public getApplicationData(): ApplicationData {
     let current = localStorage.getItem(this.DATA_KEY);
     if (!current || current === 'undefined') {
       return new ApplicationData();

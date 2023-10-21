@@ -1,0 +1,41 @@
+<div id="queue-container">
+  <mat-expansion-panel expanded>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Required Resources</mat-panel-title>
+    </mat-expansion-panel-header>
+    <table *ngIf="requiredResources.length > 0; else no_resources">
+      <tr *ngFor="let row of requiredResources">
+        <td><fa-icon [icon]="row.icon"></fa-icon></td>
+        <td>{{ row.name }}</td>
+        <td>x{{ row.amount }}</td>
+        <td>{{ row.amount * row.weightEach | number:'1.2-2' }}KG</td>
+      </tr>
+    </table>
+    <ng-template #no_resources>
+      Your outposts are all build!
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="isFirst" *ngFor="let outpost of queuedOutposts; first as isFirst">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon *ngIf="allJobsChecked(outpost)" class="green" matTooltip="All tasks completed" matTooltipPosition="left">check</mat-icon>
+          <mat-icon *ngIf="!allJobsChecked(outpost)" class="red" matTooltip="There are remaining jobs" matTooltipPosition="left">warning</mat-icon>
+          <span class="queue-outpost-name">{{ outpost.outpost.name }}</span>
+          <mat-panel-description>({{outpost.outpost.system}}, {{outpost.outpost.planet}}<span *ngIf="outpost.outpost.moon">, {{outpost.outpost.moon}}</span>)</mat-panel-description>
+          <button mat-icon-button class="green panel-title-button" (click)="confirmQueuedOutpost(outpost, $event)" matTooltip="Mark as completed" [disabled]="!allJobsChecked(outpost)"><mat-icon>check</mat-icon></button>
+          <button mat-icon-button class="red panel-title-button" (click)="resetQueuedOutpost(outpost, $event)" matTooltip="Delete from queue"><mat-icon>delete</mat-icon></button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let structure of outpost.structures">
+          <mat-checkbox [(ngModel)]="structure.structure!.checked" (change)="checkboxChanged()">
+            <span *ngIf="!structure.toDestroy">Build: </span>
+            <span *ngIf="structure.toDestroy">Destroy: </span>
+            <span>{{structure.structure.structure?.name}}</span> (x{{structure.amount}})</mat-checkbox>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

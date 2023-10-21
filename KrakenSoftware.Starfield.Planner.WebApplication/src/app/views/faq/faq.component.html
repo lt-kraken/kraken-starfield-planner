@@ -55,4 +55,19 @@
       </ul>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="light">
+    <mat-card-header>
+      <mat-card-title>The website appears to act more funky than usual.</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Hmm, I might have made a mistake or there is a version mismatch due to caching.</p>
+      <p>You can either join the Discord, and I'll make an effort to help you out and fix the issue.</p>
+      <ul>
+        <li class="link" (click)="joinCommunity()">Join Discord</li>
+      </ul>
+      <p>Alternatively, you can click the button below which will reset the cache for the website, I'm truly sorry for this.</p>
+      <button mat-button class="red" (click)="clearCache()">Clear Cache</button>
+    </mat-card-content>
+  </mat-card>
 </div>

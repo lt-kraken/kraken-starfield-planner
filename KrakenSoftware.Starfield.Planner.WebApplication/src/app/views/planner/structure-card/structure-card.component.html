@@ -8,14 +8,16 @@
           <mat-option *ngFor="let structure of structureOptions$ | async" [value]="structure.name">{{ structure.name }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <app-increment-input [class]="class" [data]="data" />
-      <span class="green-label" *ngIf="data.amount_desired > 0">+ {{ data.amount_desired }}</span>
-      <span class="red-label" *ngIf="data.amount_desired < 0">- {{ data.amount_desired }}</span>
+      <app-increment-input [class]="class" [data]="data" (valueUpdated)="sendUpdatedEvent($event)" />
+      <span class="green-label" *ngIf="data.amount_desired > data.amount_build && !enableDropdown">+ {{ calculateChange() }}</span>
+      <span class="red-label" *ngIf="data.amount_desired < data.amount_build && !enableDropdown">- {{ calculateChange() }}</span>
     </div>
     <div class="structure-power">
       <mat-icon>bolt</mat-icon>
-      <span>{{ formatPowerDemandOrProduction() }}</span>
-      <span *ngIf="data.amount_desired">{{ calculateChange() }}</span>
+      <span *ngIf="!enableDropdown">{{ formatPowerDemandOrProduction() }}</span>
+      <span *ngIf="enableDropdown">{{ calculatePowerChange() }}</span>
+      <span [class]="determineLabelClass()" *ngIf="data.amount_desired > data.amount_build && !enableDropdown">+ {{ calculatePowerChange() }}</span>
+      <span class="red-label" *ngIf="data.amount_desired < data.amount_build && !enableDropdown">- {{ calculatePowerChange() }}</span>
     </div>
     <div class="card-actions">
       <button mat-icon-button class="green" *ngIf="includeConfirm" (click)="confirmStructure()"><mat-icon>check</mat-icon></button>

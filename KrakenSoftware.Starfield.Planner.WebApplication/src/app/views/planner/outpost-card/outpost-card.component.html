@@ -3,7 +3,7 @@
     <mat-icon>cell_tower</mat-icon>
     <div class="outpost-name">
       <span class="title">{{data.name}}</span>
-      <span class="location">{{data.system}}, {{data.planet}} <span *ngIf="data.moon">, {{data.moon}}</span></span>
+      <span class="location">{{data.system}}, {{data.planet}}<span *ngIf="data.moon">, {{data.moon}}</span></span>
     </div>
     <div class="card-actions">
       <button mat-icon-button class="orange" (click)="editOutpost(data, $event)"><mat-icon>edit</mat-icon></button>

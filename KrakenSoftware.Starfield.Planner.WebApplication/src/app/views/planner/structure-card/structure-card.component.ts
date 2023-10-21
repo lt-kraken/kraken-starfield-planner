@@ -2,6 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { OutpostStructure } from 'src/app/models/v1/outpost-structure';
 import {Structure} from "../../../models/v1/structure";
 import {Observable} from "rxjs";
+import {DeleteOutpostDialogComponent} from "../../delete-outpost-dialog/delete-outpost-dialog.component";
+import {Outpost} from "../../../models/v1/outpost";
+import {MatDialog} from "@angular/material/dialog";
+import {DeletionDialogComponent} from "./deletion-dialog/deletion-dialog.component";
 
 @Component({
   selector: 'app-structure-card',
@@ -18,11 +22,11 @@ export class StructureCardComponent implements OnInit {
 
   @Output() confirmed = new EventEmitter();
   @Output() deleted = new EventEmitter();
+  @Output() updated = new EventEmitter();
 
   public currentStructureName?: string = '';
 
-  constructor() {
-  }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.data.structure) {
@@ -31,21 +35,30 @@ export class StructureCardComponent implements OnInit {
   }
 
   deleteStructure(): void {
-    this.deleted.emit(this.data);
+    const dialogRef = this.dialog.open(DeletionDialogComponent, { data: this.data });
+
+    dialogRef.afterClosed().subscribe((result: OutpostStructure) => {
+      if (result) {
+        this.deleted.emit(result);
+      }
+    });
   }
 
   confirmStructure(): void {
-    console.log(this.data);
     this.confirmed.emit(this.data);
+  }
+
+  sendUpdatedEvent(event: Event) {
+    this.data.dirty = this.data.amount_build !== this.data.amount_desired;
+    this.data.checked = false;
+    this.updated.emit(event);
   }
 
   updateStructure(): void {
     this.structureOptions$.subscribe(x => {
       for(let s of x) {
         if (s.name === this.currentStructureName) {
-          console.log(this.data);
           this.data.structure = s;
-          console.log(this.data);
         }
       }
     });
@@ -63,22 +76,35 @@ export class StructureCardComponent implements OnInit {
 
     if (!this.data.structure.powerDemand) return '?';
     let demandBuild = this.data.structure.powerDemand * this.data.amount_build;
-    let demandQueued = this.data.structure.powerDemand * this.data.amount_desired;
-    return `${demandBuild + demandQueued}`;
+    return `${demandBuild}`;
   }
 
   public calculateChange(): string {
-    if (!this.data.structure || !this.data.amount_desired) return '';
+    return Math.abs(this.data.amount_build-this.data.amount_desired).toString();
+  }
+
+  public calculatePowerChange(): string {
+    if (!this.data.structure) return '';
 
     let isPowerBuildng = !this.data.structure.powerDemand;
     if (isPowerBuildng && this.data.structure.powerProductionMin && this.data.structure.powerProductionMax) {
-      let minProductionQueued = this.data.structure.powerProductionMin * this.data.amount_desired;
-      let maxProductionQueued = this.data.structure.powerProductionMax * this.data.amount_desired;
+      let minProductionQueued = this.data.structure.powerProductionMin * parseInt(this.calculateChange(), 10);
+      let maxProductionQueued = this.data.structure.powerProductionMax * parseInt(this.calculateChange(), 10);
       return `${minProductionQueued}~${maxProductionQueued}`;
     }
 
     if (!this.data.structure.powerDemand) return '';
-    let demandQueued = this.data.structure.powerDemand * this.data.amount_desired;
+    let demandQueued = this.data.structure.powerDemand * parseInt(this.calculateChange(), 10);
     return `${demandQueued}`;
+  }
+
+  determineLabelClass(): string {
+    if (!this.data.structure) {
+      console.error('Invalid state detected');
+      return '';
+    }
+
+    if (this.data.structure.powerDemand) return 'red-label';
+    return 'green-label';
   }
 }

@@ -8,11 +8,9 @@ import {Outpost} from "../../models/v1/outpost";
 import {OutpostStructure} from 'src/app/models/v1/outpost-structure';
 import {SnackbarService} from 'src/app/services/snackbar.service';
 import {ModifyOutpostDialogComponent} from '../modify-outpost-dialog/modify-outpost-dialog.component';
-import * as _ from "lodash";
-import {GroupedResult} from "../../models/v1/grouped_result";
 import {ApiClientService} from "../../services/api-client.service";
 import {Structure} from "../../models/v1/structure";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 interface Food {
   value: string;
@@ -37,16 +35,12 @@ export class PlannerComponent implements OnInit {
   faAtom = faAtom;
   faMicrochip = faMicrochip;
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-
   data!: ApplicationData;
   activeOutpost?: Outpost = undefined;
   groupedOutpostStructures: { [category: string]: OutpostStructure[] } = {};
   structures!: Observable<Structure[]>;
+
+  updateQueueSubject: Subject<void> = new Subject<void>();
 
   constructor(
     public dialog: MatDialog,
@@ -79,19 +73,24 @@ export class PlannerComponent implements OnInit {
       return;
     }
 
-    this.data.outposts.splice(index, 1);
-    if (this.activeOutpost === outpost) {
-      this.setInitialSelection();
-    }
+    this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) {
+      self.data.outposts.splice(index, 1);
+      if (self.activeOutpost === outpost) {
+        self.setInitialSelection();
+      }
 
-    this._snackBar.showMessage(`Outpost ${outpost.name} has been deleted.`, 'green');
+      self._snackBar.showMessage(`Outpost ${outpost.name} has been deleted.`, 'green');
+    });
   }
 
   modifyOutpost(outpost: Outpost, modification: Outpost): void {
-    outpost.name = modification.name;
-    outpost.system = modification.system;
-    outpost.planet = modification.planet;
-    outpost.moon = modification.moon;
+
+    this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) {
+      outpost.name = modification.name;
+      outpost.system = modification.system;
+      outpost.planet = modification.planet;
+      outpost.moon = modification.moon;
+    });
 
     this._snackBar.showMessage(`Outpost ${modification.name} has been modified.`, 'green');
   }
@@ -109,8 +108,10 @@ export class PlannerComponent implements OnInit {
     const dialogRef = this.dialog.open(ModifyOutpostDialogComponent, { data: dialogData });
     dialogRef.afterClosed().subscribe((result: Outpost) => {
       if (result) {
-        this.data.outposts.push(result);
-        this.setActiveOutpost(this.data.outposts[this.data.outposts.length-1]);
+        this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) {
+          data.outposts.push(result);
+          self.setActiveOutpost(data.outposts[data.outposts.length-1]);
+        });
       }
     });
   }
@@ -146,22 +147,27 @@ export class PlannerComponent implements OnInit {
       return;
     }
 
-    this.activeOutpost.unsaved_structures.push(new OutpostStructure());
+    this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) {
+      self.activeOutpost!.unsaved_structures.push(new OutpostStructure());
+    });
   }
 
   addStructureToActiveOutpost(structure: OutpostStructure): void {
-    console.log(structure);
-
     if (!this.activeOutpost) {
       this._snackBar.showMessage('Unable to add structure because no outpost is selected', 'red');
       return;
     }
 
-    let index = this.activeOutpost.unsaved_structures.indexOf(structure);
-    this.activeOutpost.unsaved_structures.splice(index, 1);
-    this.activeOutpost.structures.push(structure);
+    this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) {
+      let index = self.activeOutpost!.unsaved_structures.indexOf(structure);
+      structure.dirty = true;
+      self.activeOutpost!.unsaved_structures.splice(index, 1);
+      self.activeOutpost!.structures.push(structure);
 
-    this.updateOutpostStructureGroups();
+      self.updateOutpostStructureGroups();
+    });
+
+    this.updateQueueSubject.next();
   }
 
   removeStructureFromActiveOutpost(structure: OutpostStructure): void {
@@ -170,194 +176,31 @@ export class PlannerComponent implements OnInit {
       return;
     }
 
-    let unused_index = this.activeOutpost.unsaved_structures.indexOf(structure);
-    if (unused_index !== -1) {
-      this.activeOutpost.unsaved_structures.splice(unused_index, 1);
-      this.updateOutpostStructureGroups();
-      return;
-    }
+    this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) {
+      let unused_index = self.activeOutpost!.unsaved_structures.indexOf(structure);
+      if (unused_index !== -1) {
+        self.activeOutpost!.unsaved_structures.splice(unused_index, 1);
+        self.updateOutpostStructureGroups();
+        return;
+      }
 
-    let index = this.activeOutpost.structures.indexOf(structure);
-    if (index !== -1) {
-      this.activeOutpost.structures.splice(unused_index, 1);
-      this.updateOutpostStructureGroups();
-      return;
-    }
+      let index = self.activeOutpost!.structures.indexOf(structure);
+      if (index !== -1) {
+        self.activeOutpost!.structures.splice(unused_index, 1);
+        self.updateOutpostStructureGroups();
+        return;
+      }
 
-    this._snackBar.showMessage(`Structure ${structure.structure?.name} could not be found for outpost ${this.activeOutpost.name}`, 'red')
+      self._snackBar.showMessage(`Structure ${structure.structure?.name} could not be found for outpost ${self.activeOutpost!.name}`, 'red');
+    });
+
+    this.updateQueueSubject.next();
+  }
+
+  saveStructureUpdate(updateQueue: boolean) {
+    this.persistenceService.persistableAction(this, this.data, function(self: PlannerComponent, data: ApplicationData) { });
+    if (updateQueue) this.updateQueueSubject.next();
   }
   //#endregion
-
-
-
-
-  //#region DELETE ME METHODS
-  public DELETE_ME_SAVE_CACHE(): void {
-    this.persistenceService.persistApplicationData(this.data);
-    this._snackBar.showMessage(`DEBUG: PERSISTED TO CACHE`, 'red');
-  }
-
-  public DELETE_ME_CLEAR_CACHE(): void {
-    this.persistenceService.persistApplicationData(new ApplicationData());
-    this._snackBar.showMessage(`DEBUG: CLEARED CACHE`, 'red');
-  }
-
-  public cachedValued?: ApplicationData;
-  public DELETE_ME_SHOW_CACHE(): void {
-    this.cachedValued = this.persistenceService.getApplicationData();
-    this._snackBar.showMessage(`DEBUG: CACHE DISPLAY TOGGLED`, 'red');
-  }
-
-
-
-  deleteQueuedOutpost(event: Event): void {
-    event.stopPropagation();
-    event.preventDefault();
-
-    console.log("clicked");
-  }
-
-
-
-  // updateAmount(structure: OutpostStructure, event: any) {
-  //   structure.DesiredBuild = event.amount;
-  //   if (event.amount < structure.CurrentlyBuild) {
-  //     structure.CurrentlyBuild = event.amount;
-  //   }
-  //   this.updateBuildQueue();
-  // }
-  //
-  // createOutpost(): void {
-  //   const data: Outpost = {
-  //     Id: 0,
-  //     Name: '',
-  //     System: '',
-  //     Planet: '',
-  //     Moon: ''
-  //   };
-  //
-  //   const dialogRef = this.dialog.open(CreateOutpostComponent, { data });
-  //
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (!result) return;
-  //     this.outposts.push(result);
-  //     if (this.outposts.length == 1) this.setActiveOutpost(this.outposts[0]);
-  //   });
-  // }
-  //
-  // editOutpost(outpost: Outpost): void {
-  //   let index = this.outposts.indexOf(outpost);
-  //
-  //   const data: Outpost = {
-  //     Id: outpost.Id,
-  //     Name: outpost.Name,
-  //     System: outpost.System,
-  //     Planet: outpost.Planet,
-  //     Moon: outpost.Moon
-  //   };
-  //
-  //   const dialogRef = this.dialog.open(CreateOutpostComponent, { data });
-  //
-  //   dialogRef.afterClosed().subscribe((result: Outpost) => {
-  //     if (!result) return;
-  //     this.outposts[index].Name = result.Name;
-  //     this.outposts[index].System = result.System;
-  //     this.outposts[index].Planet = result.Planet;
-  //     this.outposts[index].Moon = result.Moon;
-  //   });
-  // }
-  //
-  // deleteOutpost(outpost: Outpost): void {
-  //   let index = this.outposts.indexOf(outpost, 0);
-  //
-  //   const data: Outpost = {
-  //     Id: outpost.Id,
-  //     Name: outpost.Name,
-  //     System: outpost.System,
-  //     Planet: outpost.Planet,
-  //     Moon: outpost.Moon
-  //   };
-  //
-  //   const dialogRef = this.dialog.open(DeleteOutpostDialogComponent, { data });
-  //
-  //   dialogRef.afterClosed().subscribe((result: Outpost) => {
-  //     if (result) {
-  //       if (index > -1) this.outposts.splice(index, 1);
-  //       this.setActiveOutpost(this.outposts[0]);
-  //       this.updateBuildQueue();
-  //     }
-  //   });
-  // }
-  //
-
-  //
-
-  //
-  // addBlueprintStructure(): void {
-  //   if (!this.activeOutpost) return;
-  //   if (!this.activeOutpost.OutpostStructures) this.activeOutpost.OutpostStructures = [];
-  //
-  //   let item = {
-  //     Structure: {
-  //       Id: -1,
-  //       Name: ''
-  //     },
-  //     CurrentlyBuild: 0,
-  //     DesiredBuild: 1,
-  //   };
-  //
-  //   this.activeOutpost?.OutpostStructures?.push(item);
-  //   this.updateBuildQueue();
-  // }
-  //
-  // updateBuildQueue(): void {
-  //   let queue: BuildQueueItem[] = [];
-  //
-  //   for(let outpost of this.outposts) {
-  //     if (!outpost.OutpostStructures) continue;
-  //
-  //     for(let structure of outpost.OutpostStructures) {
-  //       if (structure.CurrentlyBuild < structure.DesiredBuild) {
-  //         queue.push({
-  //           OutpostName: outpost.Name,
-  //           Structure: structure
-  //         });
-  //       }
-  //     }
-  //   }
-  //
-  //   this.buildQueue = queue;
-  // }
-  //
-  // isBuild(outpost: BuildQueueItem): boolean {
-  //   return outpost.Structure.CurrentlyBuild === outpost.Structure.DesiredBuild;
-  // }
-  //
-  // markComplete(outpost: BuildQueueItem): void {
-  //   outpost.Structure.CurrentlyBuild = outpost.Structure.DesiredBuild;
-  // }
-  //
-  // amountBuildQueueNotYetCompleted(groupedOutpost: any): number {
-  //   let rows = groupedOutpost.value;
-  //   let amountNotCompleted = 0;
-  //   for (let structure of rows) {
-  //     if (structure.Structure.CurrentlyBuild < structure.Structure.DesiredBuild) {
-  //       amountNotCompleted++;
-  //     }
-  //   }
-  //
-  //   return amountNotCompleted;
-  // }
-  //
-  // buildQueueSomeCompleted(groupedOutpost: any): boolean {
-  //   let amountNotCompleted = this.amountBuildQueueNotYetCompleted(groupedOutpost);
-  //   return amountNotCompleted !== groupedOutpost.value.length && amountNotCompleted !== 0;
-  // }
-  //
-  // markAllCompleted(groupedOutpost: any): void {
-  //   for (let structure of groupedOutpost.value) {
-  //     structure.Structure.CurrentlyBuild = structure.Structure.DesiredBuild;
-  //   }
-  // }
 
 }

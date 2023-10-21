@@ -30,6 +30,8 @@ import { StructureCardComponent } from './views/planner/structure-card/structure
 import { FaqComponent } from './views/faq/faq.component';
 import {CommonModule} from "@angular/common";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { QueueComponent } from './views/planner/queue/queue.component';
+import { DeletionDialogComponent } from './views/planner/structure-card/deletion-dialog/deletion-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     OutpostCardComponent,
     StructureCardComponent,
     FaqComponent,
+    QueueComponent,
+    DeletionDialogComponent,
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
