@@ -32,6 +32,11 @@ import {CommonModule} from "@angular/common";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { QueueComponent } from './views/planner/queue/queue.component';
 import { DeletionDialogComponent } from './views/planner/structure-card/deletion-dialog/deletion-dialog.component';
+import {
+  MAT_SELECTSEARCH_DEFAULT_OPTIONS,
+  MatSelectSearchOptions,
+  NgxMatSelectSearchModule
+} from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -72,8 +77,17 @@ import { DeletionDialogComponent } from './views/planner/structure-card/deletion
         MatSnackBarModule,
         FontAwesomeModule,
         CommonModule,
+        NgxMatSelectSearchModule
     ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_SELECTSEARCH_DEFAULT_OPTIONS,
+      useValue: <MatSelectSearchOptions>{
+        noEntriesFoundLabel: "No matching structures found",
+        placeholderLabel: "Search.."
+      }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,8 +4,11 @@
       <span *ngIf="!enableDropdown">{{ data.structure?.name ?? '' }}</span>
       <mat-form-field appearance="fill" *ngIf="enableDropdown">
         <mat-label>Structure</mat-label>
-        <mat-select panelClass="{{class}}" [(ngModel)]="currentStructureName" (selectionChange)="updateStructure()">
-          <mat-option *ngFor="let structure of structureOptions$ | async" [value]="structure.name">{{ structure.name }}</mat-option>
+        <mat-select panelClass="{{class}}" [formControl]="structureCtrl" [(ngModel)]="currentStructureName" (selectionChange)="updateStructure()" #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search [formControl]="structureFilterCtrl"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let structure of filteredStructures | async" [value]="structure.name">{{ structure.name }}</mat-option>
         </mat-select>
       </mat-form-field>
       <app-increment-input [class]="class" [data]="data" (valueUpdated)="sendUpdatedEvent($event)" />
@@ -20,7 +23,7 @@
       <span class="red-label" *ngIf="data.amount_desired < data.amount_build && !enableDropdown">- {{ calculatePowerChange() }}</span>
     </div>
     <div class="card-actions">
-      <button mat-icon-button class="green" *ngIf="includeConfirm" (click)="confirmStructure()"><mat-icon>check</mat-icon></button>
+      <button mat-icon-button class="green" *ngIf="includeConfirm" [disabled]="confirmEnabled()" (click)="confirmStructure()"><mat-icon>check</mat-icon></button>
       <button mat-icon-button class="red" (click)="deleteStructure()"><mat-icon>delete</mat-icon></button>
     </div>
   </mat-card-content>

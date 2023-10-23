@@ -1,6 +1,10 @@
 ECHO OFF
 CLS
 
+if "%1" == "buildwebapp" (
+	GOTO XBUILDWEBAPP
+)
+
 :MENU
 ECHO.
 ECHO ...............................................

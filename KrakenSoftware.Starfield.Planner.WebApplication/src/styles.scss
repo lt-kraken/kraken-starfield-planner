@@ -263,3 +263,20 @@ mat-snack-bar-container {
     text-align: center;
   }
 }
+
+/* Dropdown */
+div.cdk-overlay-pane {
+  width: fit-content !important;
+}
+
+ngx-mat-select-search {
+  .mat-select-search-input {
+    background-color: $light_input_shadow_darker !important;
+    color: white !important;
+  }
+
+  .mat-select-search-no-entries-found,
+  mat-icon {
+    color: $dark_input_shadow !important;
+  }
+}

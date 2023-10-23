@@ -1,3 +1,7 @@
+using KrakenSoftware.Starfield.Planner.Data;
+using KrakenSoftware.Starfield.Planner.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var origins = "_myAllowSpecificOrigins";
@@ -12,11 +16,23 @@ builder.Services.AddCors(options =>
         });
 });
 
-
+// Basic
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// MySQL
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), op => op.EnableRetryOnFailure(
+        maxRetryCount: 5,
+        maxRetryDelay: TimeSpan.FromSeconds(30),
+        errorNumbersToAdd: null));
+});
+
+// DI
+builder.Services.AddScoped<IStructureModule, StructureModule>();
 
 var app = builder.Build();
 

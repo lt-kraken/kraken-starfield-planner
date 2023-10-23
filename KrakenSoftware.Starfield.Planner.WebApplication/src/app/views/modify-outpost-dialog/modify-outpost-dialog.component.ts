@@ -19,10 +19,10 @@ import {Outpost} from "../../models/v1/outpost";
 })
 export class ModifyOutpostDialogComponent {
 
-  outpostFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
-  systemFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
-  planetFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
-  moonFormControl = new FormControl('', [Validators.minLength(0), Validators.maxLength(25)]);
+  outpostFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]);
+  systemFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]);
+  planetFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]);
+  moonFormControl = new FormControl('', [Validators.minLength(0), Validators.maxLength(30)]);
 
   constructor(
     public dialogRef: MatDialogRef<ModifyOutpostDialogComponent>,

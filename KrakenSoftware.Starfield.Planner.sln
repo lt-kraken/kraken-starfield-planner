@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrakenSoftware.Starfield.Pl
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "KrakenSoftware.Starfield.Planner.WebApplication", "KrakenSoftware.Starfield.Planner.WebApplication\KrakenSoftware.Starfield.Planner.WebApplication.esproj", "{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrakenSoftware.Starfield.Planner.Data", "KrakenSoftware.Starfield.Planner.Data\KrakenSoftware.Starfield.Planner.Data.csproj", "{CC0B662F-8BAC-44BE-8694-B23EF9790B64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B2393B9-ADE4-471E-AFCB-20F8A00DB587}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CC0B662F-8BAC-44BE-8694-B23EF9790B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0B662F-8BAC-44BE-8694-B23EF9790B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0B662F-8BAC-44BE-8694-B23EF9790B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0B662F-8BAC-44BE-8694-B23EF9790B64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
