@@ -22,7 +22,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // MySQL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+#if DEBUG
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+#else
+    var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+#endif
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), op => op.EnableRetryOnFailure(
