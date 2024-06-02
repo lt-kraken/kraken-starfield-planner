@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faPatreon, faPaypal } from '@fortawesome/free-brands-svg-icons';
+import {Observable} from "rxjs";
+import {ApiClientService} from "./services/api-client.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
 
   faPatreon = faPatreon;
   faPayPal = faPaypal;
+  backendAvailable$!: Observable<boolean | null>;
+
+  constructor(private apiClientService: ApiClientService) {
+    this.backendAvailable$ = this.apiClientService.getBackendStatus();
+  }
+
+  ngOnInit() {
+    this.apiClientService.checkBackendAvailability();
+  }
 
   getYear(): number {
     return new Date().getFullYear();
@@ -28,6 +39,11 @@ export class AppComponent {
 
   openBuyMeACoffee() {
     const url = 'https://buymeacoffee.com/krakensoftware';
+    window.open(url, '_blank');
+  }
+
+  joinCommunity() {
+    const url = 'https://discord.gg/YD5buJcUmZ';
     window.open(url, '_blank');
   }
 }

@@ -1,5 +1,13 @@
 ﻿<body>
     <app-nav-menu></app-nav-menu>
+    <div id="notification-container">
+      <div id="notification-message" class="error" *ngIf="!(backendAvailable$ | async)">
+        <p class="title">We're experiencing technical difficulties</p>
+        <p>We are currently facing some issues with our backend, beware that features may be missing or do not work as intended. Please try again in a few minutes.</p>
+        <p>If the issue persists, feel free to reach out to us on <a (click)="joinCommunity()">Discord</a>.</p>
+        <p>Thank you for your patience and understanding.</p>
+      </div>
+    </div>
     <div class="container">
       <router-outlet></router-outlet>
     </div>

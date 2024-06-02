@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {faDiscord} from "@fortawesome/free-brands-svg-icons";
+import {faDiscord, faPatreon} from "@fortawesome/free-brands-svg-icons";
+import {faSquareArrowUpRight} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-nav-menu',
@@ -23,4 +24,12 @@ export class NavMenuComponent {
     const url = 'https://discord.gg/YD5buJcUmZ';
     window.open(url, '_blank');
   }
+
+  openStatusPage() {
+    const url = 'https://stats.uptimerobot.com/19rynu6ARY';
+    window.open(url, '_blank');
+  }
+
+  protected readonly faPatreon = faPatreon;
+  protected readonly faSquareArrowUpRight = faSquareArrowUpRight;
 }

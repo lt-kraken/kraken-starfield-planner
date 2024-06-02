@@ -1,5 +1,37 @@
 @import "../assets/scss/colors";
 
+#notification-container {
+  margin: 20px;
+
+  #notification-message {
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    text-align: center;
+
+    & .title {
+      font-weight: 500;
+      margin-bottom: 10px;
+      text-decoration: underline;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+      color: white;
+    }
+
+    &.error {
+      background: $red-dark;
+    }
+  }
+}
+
 footer {
   margin-top: 100px;
   bottom: 0;
