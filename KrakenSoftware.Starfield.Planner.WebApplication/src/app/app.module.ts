@@ -37,6 +37,7 @@ import {
   MatSelectSearchOptions,
   NgxMatSelectSearchModule
 } from 'ngx-mat-select-search';
+import {NgxPiwikProModule, NgxPiwikProRouterModule} from "@piwikpro/ngx-piwik-pro";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,8 @@ import {
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+        NgxPiwikProModule.forRoot('78b30df2-c450-4554-a083-73fd5d3198fb', 'https://krakensoftware.piwik.pro'),
+        NgxPiwikProRouterModule,
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
